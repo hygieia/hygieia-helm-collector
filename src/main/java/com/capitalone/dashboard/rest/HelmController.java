@@ -12,16 +12,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capitalone.dashboard.model.ComponentData;
-import com.capitalone.dashboard.service.DockerServiceImpl;
+import com.capitalone.dashboard.service.HelmServiceImpl;
 
 @RestController
-public class DockerController {
-	private static final Log LOG = LogFactory.getLog(DockerController.class);
+public class HelmController {
+	private static final Log LOG = LogFactory.getLog(HelmController.class);
 
-	private final DockerServiceImpl dockerService;
+	private final HelmServiceImpl dockerService;
 
 	@Autowired
-	public DockerController(DockerServiceImpl dockerService) {
+	public HelmController(HelmServiceImpl dockerService) {
 		this.dockerService = dockerService;
 	}
 

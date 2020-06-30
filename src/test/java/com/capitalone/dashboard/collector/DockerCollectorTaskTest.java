@@ -67,11 +67,11 @@ public class DockerCollectorTaskTest {
 	CPUStatsRepository<CPUStats> cpuStatsRepository;
 
 	@Mock
-	DockerSettings dockerSettings;
+	HelmSettings dockerSettings;
 	
 	
 	@InjectMocks
-	DockerCollectorTask dockerCollectorTask;
+	HelmCollectorTask dockerCollectorTask;
 	
 	@Mock
 	CollectorItemRepository collectorItemRepository; 

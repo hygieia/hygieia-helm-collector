@@ -1,17 +1,17 @@
 package com.capitalone.dashboard.model;
 
-import com.capitalone.dashboard.enums.STATUS;
+import com.capitalone.dashboard.enums.HelmStatus;
 
 /*The Source of data to specifc to each chart component rendered on the screen*/
 public class ComponentData {
 	
-	private STATUS status;
+	private HelmStatus status;
 
-	public STATUS getStatus() {
+	public HelmStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(STATUS status) {
+	public void setStatus(HelmStatus status) {
 		this.status = status;
 	}
 	

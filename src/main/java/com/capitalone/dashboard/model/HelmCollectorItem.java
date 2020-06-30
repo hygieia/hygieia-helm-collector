@@ -1,6 +1,6 @@
 package com.capitalone.dashboard.model;
 
-public class DockerCollectorItem extends CollectorItem{
+public class HelmCollectorItem extends CollectorItem{
 	
 	public static final String API_TOKEN = "apiToken"; // terraform app api token allowed
 	

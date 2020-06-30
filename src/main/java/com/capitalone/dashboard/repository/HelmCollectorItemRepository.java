@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.repository.Query;
 
 import com.capitalone.dashboard.model.CollectorItem;
 
-public interface DockerCollectorItemRepository extends BaseCollectorItemRepository<CollectorItem> {
+public interface HelmCollectorItemRepository extends BaseCollectorItemRepository<CollectorItem> {
 
 	 
 

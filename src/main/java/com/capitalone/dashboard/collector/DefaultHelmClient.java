@@ -3,14 +3,11 @@ package com.capitalone.dashboard.collector;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
-import java.lang.reflect.Method;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.function.Predicate;
-import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -18,21 +15,14 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestOperations;
-import org.springframework.web.client.RestTemplate;
 
+import com.capitalone.dashboard.builder.ModelBuilder;
 import com.capitalone.dashboard.command.util.CommandLineUtil;
 import com.capitalone.dashboard.misc.HygieiaException;
-import com.capitalone.dashboard.model.Release;
-import com.capitalone.dashboard.util.Supplier;
+import com.capitalone.dashboard.model.BaseModel;
 
 /**
  * DockerClient implementation that uses docker apis to fetch information about
@@ -42,89 +32,62 @@ import com.capitalone.dashboard.util.Supplier;
 @Component
 public class DefaultHelmClient implements HelmClient {
     private static final Log LOG = LogFactory.getLog(DefaultHelmClient.class);
-    private final RestTemplate restTemplate ;
-    MultiValueMap<String, String> headerMultiValueMap;
-    HttpEntity<String> httpEntity;
     String result;
     BufferedReader bufferrdReader;
     
-    
-    @Autowired
-    public DefaultHelmClient(Supplier<RestOperations> restOperationsSupplier) {
-        this.restTemplate =  new RestTemplate();
-    }
-    
-    /**
-     * Gets runs for a given Workspace
-     * @param url
-     * @param apiToken
-     * @throws RestClientException
-     * @throws MalformedURLException
-     * @throws HygieiaException
-     */
-    public JSONObject getDataAsObject(String url) throws RestClientException, MalformedURLException, HygieiaException{
-    	LOG.debug("Making rest call to URL ::" + url);
-    	ResponseEntity<String> responseJSON = makeRestCall(url);
-    	if (responseJSON != null) 
-    		return parseAsObject(responseJSON);
-    	else
-    		return null;
-    }
-    
-    /**
-     * Gets runs for a given Workspace
-     * @param url
-     * @param apiToken
-     * @throws RestClientException
-     * @throws MalformedURLException
-     * @throws HygieiaException
-     */
-    public JSONArray getDataAsArray(String url) throws RestClientException, MalformedURLException, HygieiaException{
-    	LOG.debug("Making rest call to URL ::" + url);
-    	ResponseEntity<String> responseJSON = makeRestCall(url);
-    	if (responseJSON != null) 
-    		return parseAsArray(responseJSON);
-    	else
-    		return null;
-    }
-    
-    /**
-     * Gets runs for a given Workspace
-     * @param url
-     * @param apiToken
-     * @throws RestClientException
-     * @throws MalformedURLException
-     * @throws HygieiaException
-     */
-    public JSONObject getData(String url, String apiToken) throws RestClientException, MalformedURLException, HygieiaException{
-    	LOG.debug("Making rest call to URL ::" + url);
-    	ResponseEntity<String> responseJSON = makeRestCall(url, apiToken);
-    	if (responseJSON != null) 
-    		return parseAsObject(responseJSON);
-		else
-			return null;
-    }
-    
-    
-    private ResponseEntity<String> makeRestCall(String url, String apiToken) {
-        // No Auth
-            return restTemplate.exchange(url, HttpMethod.GET,getHeaders(apiToken),String.class);
-    }
-    
-    
-    private ResponseEntity<String> makeRestCall(String url) {
-    	// Basic Auth only.
-    	return restTemplate.exchange(url, HttpMethod.GET,null,String.class);
-    }
-    
-    private HttpEntity<String> getHeaders(final String apiToken) {
-        headerMultiValueMap = new LinkedMultiValueMap<String, String>();
-        headerMultiValueMap.add("Authorization",
-				"Bearer " + apiToken);
-        httpEntity = new HttpEntity<String>(headerMultiValueMap);
-        return httpEntity;
-    }
+    @Override
+	public String getCommandResult(String command, Long timeout) throws RuntimeException, IOException, InterruptedException {
+		// TODO Auto-generated method stub
 
+		return CommandLineUtil.execCommand(command, timeout);
+	}
+
+    @Override
+	public Object getCommandResultComposed(String command, String regex, Long timeout,
+			Class clazz) throws RuntimeException, IOException, InterruptedException{
+		String line = null;
+		boolean matched = false;
+		result = getCommandResult(command, timeout);
+		//List<Method> methods = new ArrayList<Method>(); 
+		
+		bufferrdReader = new BufferedReader(new StringReader(result));
+		// Flash the below
+		//Predicate<Method> isGetter = method -> (Pattern.compile(getter[++i], Pattern.CASE_INSENSITIVE).matcher(method.getName()).find());
+		
+		//(Stream.of(clazz.getDeclaredMethods()).anyMatch(isGetter)); flash the purpose of anymatch
+		
+		//Stream.of(clazz.getDeclaredMethods()).filter(isGetter).collect(Collectors.toList());
+		
+		List<Object> objectList = new ArrayList<Object>();
+		
+		
+        while ((line = bufferrdReader.readLine()) != null){
+        	
+        	if(matched) {
+        		
+        		Object values[]  = (line.split("\\t\\s*"));
+        		// in java or in subjective coding if you can solve something with abstract algo , then you can use abstartc design patterns
+        		
+				/*
+				 * BaseModel model ;//= ModelBuilder.createModelObject(clazz, values);
+				 * 
+				 * if(model == null) throw new NoClassDefFoundError();
+				 * 
+				 * objectList.add(model);
+				 */   	}
+        	
+        	
+            if(line.matches(regex)) {
+            	matched = true;
+            }
+            
+        }
+		
+		return null;
+	}
+
+    
+    
     public JSONArray parseAsArray(ResponseEntity<String> response) {
         try {
             return (JSONArray) new JSONParser().parse(response.getBody());
@@ -159,7 +122,6 @@ public class DefaultHelmClient implements HelmClient {
         Object value = json.get(key);
         return value == null ? null : value.toString();
     }
-    
 	
 	public JSONArray getJSONArray(JSONObject obj, String key) {
 		if(obj.containsKey(key))
@@ -167,8 +129,6 @@ public class DefaultHelmClient implements HelmClient {
 		
 		return null;
 	}
-
-	
 
     /**
      * Date utility
@@ -185,64 +145,6 @@ public class DefaultHelmClient implements HelmClient {
         return cal.getTime();
     }
 
-	public String getCommandResult(String command, Long timeout) throws RuntimeException, IOException, InterruptedException {
-		// TODO Auto-generated method stub
-
-		return CommandLineUtil.execCommand(command, timeout);
-	}
-
-	public List<Release> getCommandResultComposed(String command, String regex, Long timeout,
-			Class clazz) throws RuntimeException, IOException, InterruptedException{
-		String line = null;
-		boolean matched = false;
-		result = getCommandResult(command, timeout);
-		String[] getter = regex.split("");
-		int i =-1;
-		Method[] methods = b
-		
-		
-		bufferrdReader = new BufferedReader(new StringReader(result));
-		
-		Predicate<Method> isGetter = method -> (Pattern.compile(getter[++i], Pattern.CASE_INSENSITIVE).matcher(method.getName()).find());
-		
-		Stream.of(clazz.getDeclaredMethods()).anyMatch(method -> {
-			
-			
-					
-		
-		});
-        while ((line = bufferrdReader.readLine()) != null){
-        	
-        	if(matched) {
-        		
-        		int i = -1;
-        		Stream.of(line.split("\\t\\s*")).forEach(data -> {
-        			Object o = clazz.newInstance();
-        			clazz.
-        			Method method = clazz.getDeclaredMethod("set" +  getter[++i].to)
-        			
-        			
-        			
-        			
-        			
-        		})
-        		
-        		
-        		
-        	}
-        	
-        	
-            if(line.matches(regex)) {
-            	matched = true;
-            }
-            
-        }
-		
-		
-		
-		
-		return null;
-	}
 
 }
 

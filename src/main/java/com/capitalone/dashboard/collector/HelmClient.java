@@ -1,5 +1,6 @@
 package com.capitalone.dashboard.collector;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 
 import org.json.simple.JSONObject;
@@ -12,8 +13,8 @@ import com.capitalone.dashboard.misc.HygieiaException;
  */
 public interface HelmClient {
 
-	JSONObject getData(String uri, String apiToken) throws MalformedURLException, RestClientException, HygieiaException;
+	String getCommandResult(String command, Long timeout) throws RuntimeException, IOException, InterruptedException ;
 	
-	JSONObject trimOutputStream();
+	Object getCommandResultComposed(String command, String regex, Long timeout, Class clazz) throws RuntimeException, IOException, InterruptedException;
 
 }

@@ -3,7 +3,7 @@ package com.capitalone.dashboard.model;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "helm_version")
-public class Version {
+public class Version extends BaseModel{
 	private String Version;
 	private String GitCommit;
 	private String GitTreeState;
@@ -13,6 +13,17 @@ public class Version {
 	public Version() {
 		// TODO Auto-generated constructor stub
 	}
+
+	
+	
+	public Version(String version, String gitCommit, String gitTreeState, String goVersion) {
+		super();
+		Version = version;
+		GitCommit = gitCommit;
+		GitTreeState = gitTreeState;
+		GoVersion = goVersion;
+	}
+
 
 
 	public String getVersion() {

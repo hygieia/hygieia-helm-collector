@@ -1,6 +1,6 @@
 package com.capitalone.dashboard.model;
 
-import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -10,62 +10,68 @@ import com.capitalone.dashboard.enums.HelmStatus;
 
 @Document(collection="helm_release")
 public class Release extends BaseModel{
-	private String releaseName;
-	private String  revision;
-	private String updated;
-	private HelmStatus curentStatus;
-	private Chart chart;
-	private History history;
-	private String appVersion;
-	private String namespace;
-	public String getReleaseName() {
-		return releaseName;
-	}
-	public void setReleaseName(String releaseName) {
-		this.releaseName = releaseName;
-	}
-	public String getRevision() {
-		return revision;
-	}
-	public void setRevision(String revision) {
-		this.revision = revision;
-	}
-	public String getUpdated() {
-		return updated;
-	}
-	public void setUpdated(String updated) {
+	private String name;
+	private String  version;
+	private Long updated;
+	private HelmStatus status;
+	private Chart currentChart;
+	private List<Chart> chart;
+	
+	public Release(String name, String version, Long updated, HelmStatus status, Chart currentChart) {
+		super();
+		this.name = name;
+		this.version = version;
 		this.updated = updated;
-	}
-	public HelmStatus getCurentStatus() {
-		return curentStatus;
-	}
-	public void setCurentStatus(HelmStatus curentStatus) {
-		this.curentStatus = curentStatus;
-	}
-	public Chart getChart() {
-		return chart;
-	}
-	public void setChart(Chart chart) {
-		this.chart = chart;
-	}
-	public History getHistory() {
-		return history;
-	}
-	public void setHistory(History history) {
-		this.history = history;
-	}
-	public String getAppVersion() {
-		return appVersion;
-	}
-	public void setAppVersion(String appVersion) {
-		this.appVersion = appVersion;
-	}
-	public String getNamespace() {
-		return namespace;
-	}
-	public void setNamespace(String namespace) {
-		this.namespace = namespace;
+		this.status = status;
+		this.currentChart = currentChart;
 	}
 	
+	public Release(String name, String version, Long updated, HelmStatus status, Chart currentChart,
+			List<Chart> chart) {
+		super();
+		this.name = name;
+		this.version = version;
+		this.updated = updated;
+		this.status = status;
+		this.currentChart = currentChart;
+		this.chart = chart;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getVersion() {
+		return version;
+	}
+	public void setVersion(String version) {
+		this.version = version;
+	}
+	public Long getUpdated() {
+		return updated;
+	}
+	public void setUpdated(Long updated) {
+		this.updated = updated;
+	}
+	public HelmStatus getStatus() {
+		return status;
+	}
+	public void setStatus(HelmStatus status) {
+		this.status = status;
+	}
+	public Chart getCurrentChart() {
+		return currentChart;
+	}
+	public void setCurrentChart(Chart currentChart) {
+		this.currentChart = currentChart;
+	}
+	public List<Chart> getChart() {
+		return chart;
+	}
+	public void setChart(List<Chart> chart) {
+		this.chart = chart;
+	}
+
 	
 }

@@ -3,14 +3,17 @@ package com.capitalone.dashboard.model;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "helm_repo")
-public class Repo {
+public class Repo extends BaseModel{
 	
 	private String name;
 	
 	private String url;
 	
-	public Repo() {
-		// TODO Auto-generated constructor stub
+	
+	public Repo(String name, String url) {
+		super();
+		this.name = name;
+		this.url = url;
 	}
 
 	public String getName() {

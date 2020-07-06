@@ -75,7 +75,7 @@ public class HelmCollectorTask extends CollectorTask<Collector> {
 	public Collector getCollector() {
 		Collector protoType = new Collector();
 		protoType.setName("Helm"); // Invoked as the frequency for cron
-		// protoType.setCollectorType(CollectorType.Helm);
+		protoType.setCollectorType(CollectorType.Helm);
 		protoType.setOnline(true);
 		protoType.setEnabled(true);
 
@@ -149,7 +149,6 @@ public class HelmCollectorTask extends CollectorTask<Collector> {
 				}
 
 			});
-			// flash : always create a layer where you will have customexcpetions,
 
 			List<Repo> repos = (List<Repo>) helmClient.getCommandResultComposed(helmSetting.getHelmRepoCommand(),
 					helmSetting.getHelmRepoRegex(), timeout, Repo.class);
@@ -159,8 +158,6 @@ public class HelmCollectorTask extends CollectorTask<Collector> {
 				LOG.error("No Repo found, Command: ");
 			}
 			repos.parallelStream().forEach(repo -> saveOrUpdateRepo(repo));
-			// flash : keep throws the Exception and identify the accumulated place to
-			// report exceptin
 		} catch (NoDataFoundException | CommandLineException | IOException | InterruptedException | java.text.ParseException e) {
 			// TODO Auto-generated catch block
 			LOG.error("Command Execution issue found, Please check you Helm Installation; " + e.getMessage());

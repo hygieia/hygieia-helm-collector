@@ -10,14 +10,14 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RefreshScope
-@ConfigurationProperties(prefix = "docker")
+@ConfigurationProperties(prefix = "helm")
 public class HelmSettings {
 	private String proxy;
 	private String proxyPort;
 	private String proxyUser;
 	private String proxyPassword;
 	
-	@Value("${docker.cron}")
+	@Value("${helm.cron}")
 	private String cron;
 	
 	@Value("${helm.checkVersion: true}")

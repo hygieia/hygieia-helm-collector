@@ -25,8 +25,8 @@ import com.capitalone.dashboard.misc.HygieiaException;
 import com.capitalone.dashboard.model.BaseModel;
 
 /**
- * DockerClient implementation that uses docker apis to fetch information about
- * Docker Organization, workspace & run job details.
+ * HelmClient implementation that uses helm command line to fetch information about Kube Deployments
+ * 
  */
 
 @Component
@@ -45,19 +45,11 @@ public class DefaultHelmClient implements HelmClient {
     @Override
 	public Object getCommandResultComposed(String command, String regex, Long timeout,
 			Class clazz) throws RuntimeException, IOException, InterruptedException, java.text.ParseException{
-			//flash add more exceptions
 		String line = null;	
 		boolean matched = false;
 		result = getCommandResult(command, timeout);
-		//List<Method> methods = new ArrayList<Method>(); 
 		
 		bufferrdReader = new BufferedReader(new StringReader(result));
-		// Flash the below
-		//Predicate<Method> isGetter = method -> (Pattern.compile(getter[++i], Pattern.CASE_INSENSITIVE).matcher(method.getName()).find());
-		
-		//(Stream.of(clazz.getDeclaredMethods()).anyMatch(isGetter)); flash the purpose of anymatch
-		
-		//Stream.of(clazz.getDeclaredMethods()).filter(isGetter).collect(Collectors.toList());
 		
 		List<Object> objectList = new ArrayList<Object>();
 		
@@ -67,7 +59,6 @@ public class DefaultHelmClient implements HelmClient {
         	if(matched) {
         		
         		Object values[]  = (line.split("\\t\\s*"));
-        		// in java or in subjective coding if you can solve something with abstract algo , then you can use abstartc design patterns
         		
 				
 				  BaseModel model = ModelBuilder.createModelObject(clazz, values);

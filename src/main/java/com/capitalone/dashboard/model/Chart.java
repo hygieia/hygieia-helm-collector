@@ -12,7 +12,6 @@ public class Chart extends BaseModel {
 	private String appVersion;
 	private String description;
 
-	// flash the high cohesive in classes here using telescopic contructor
 	public Chart(Long updated, String status, String chart,
 			String appVersion, String description) {
 		this.updated = updated;

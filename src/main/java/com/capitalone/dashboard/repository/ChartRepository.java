@@ -1,6 +1,6 @@
 package com.capitalone.dashboard.repository;
 
-import java.awt.Container;
+import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.Query;
@@ -10,7 +10,12 @@ import com.capitalone.dashboard.model.Chart;
 
 public interface ChartRepository<T extends Chart> extends CrudRepository<T, ObjectId> {
 
-	@Query(value = "{'containerId': ?0}")
+	@Query(value = "{'chart': ?0}")
 	public Chart findByChartName(String chart);
+	
+	@Query(value = "{'releaseObjectId': ?0}")
+	public List<Chart> findByReleaseId(ObjectId releaseObjectId);
+	
+	
 
 }

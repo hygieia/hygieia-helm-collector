@@ -16,9 +16,7 @@ dbusername=${HYGIEIA_API_ENV_SPRING_DATA_MONGODB_USERNAME:-dashboarduser}
 dbpassword=${HYGIEIA_API_ENV_SPRING_DATA_MONGODB_PASSWORD:-dbpassword}
 
 #Collector schedule (required)
-iac.cron=${IAC_CRON:-* * 0/60 * * *}
-
-iac.cloudapp.url=${IAC_CLOUDAPP_URL:-http://app.terraform.io/api/v2}
+helm.cron=${HELM_CRON:-* * 0/60 * * *}
 
 EOF
 

@@ -19,7 +19,10 @@ public class HelmSettings {
 	
 	@Value("${docker.cron}")
 	private String cron;
-
+	
+	@Value("${helm.checkVersion: true}")
+	private Boolean checkVersion;
+	
 	@Value("${helm.test:helm version}")
 	private String helmTestCommand;
 
@@ -46,6 +49,19 @@ public class HelmSettings {
 	
 	@Value("{$helm.repo.command:helm repo}")
 	private String helmRepoRegex;
+
+
+	
+	
+	
+	public Boolean getCheckVersion() {
+		return checkVersion;
+	}
+
+
+	public void setCheckVersion(Boolean checkVersion) {
+		this.checkVersion = checkVersion;
+	}
 
 
 	public String getProxy() {

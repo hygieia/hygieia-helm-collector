@@ -15,6 +15,6 @@ public interface HelmClient {
 
 	String getCommandResult(String command, Long timeout) throws RuntimeException, IOException, InterruptedException ;
 	
-	Object getCommandResultComposed(String command, String regex, Long timeout, Class clazz) throws RuntimeException, IOException, InterruptedException;
+	Object getCommandResultComposed(String command, String regex, Long timeout, Class clazz) throws RuntimeException, IOException, InterruptedException, java.text.ParseException;
 
 }

@@ -44,8 +44,9 @@ public class DefaultHelmClient implements HelmClient {
 
     @Override
 	public Object getCommandResultComposed(String command, String regex, Long timeout,
-			Class clazz) throws RuntimeException, IOException, InterruptedException{
-		String line = null;
+			Class clazz) throws RuntimeException, IOException, InterruptedException, java.text.ParseException{
+			//flash add more exceptions
+		String line = null;	
 		boolean matched = false;
 		result = getCommandResult(command, timeout);
 		//List<Method> methods = new ArrayList<Method>(); 
@@ -68,13 +69,14 @@ public class DefaultHelmClient implements HelmClient {
         		Object values[]  = (line.split("\\t\\s*"));
         		// in java or in subjective coding if you can solve something with abstract algo , then you can use abstartc design patterns
         		
-				/*
-				 * BaseModel model ;//= ModelBuilder.createModelObject(clazz, values);
-				 * 
-				 * if(model == null) throw new NoClassDefFoundError();
-				 * 
-				 * objectList.add(model);
-				 */   	}
+				
+				  BaseModel model = ModelBuilder.createModelObject(clazz, values);
+				  
+				  if(model == null) 
+					  throw new NoClassDefFoundError();
+				  
+				  objectList.add(model);
+				   }
         	
         	
             if(line.matches(regex)) {
@@ -83,7 +85,7 @@ public class DefaultHelmClient implements HelmClient {
             
         }
 		
-		return null;
+		return objectList;
 	}
 
     

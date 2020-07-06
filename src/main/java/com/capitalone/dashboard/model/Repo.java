@@ -1,10 +1,11 @@
 package com.capitalone.dashboard.model;
 
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "helm_repo")
 public class Repo extends BaseModel{
-	
+	@Indexed
 	private String name;
 	
 	private String url;

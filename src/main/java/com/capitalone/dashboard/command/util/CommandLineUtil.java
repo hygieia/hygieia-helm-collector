@@ -12,10 +12,11 @@ import org.apache.commons.exec.PumpStreamHandler;
 
 public class CommandLineUtil {
 	
-	public static void main(String[] args) throws RuntimeException, IOException, InterruptedException {
-		String result = (execCommand("netstat -a -o -n", 3000l));
-	}
-	
+	/*
+	 * public static void main(String[] args) throws RuntimeException, IOException,
+	 * InterruptedException { String result = (execCommand("netstat -a -o -n",
+	 * 3000l)); }
+	 */
 	
 	
 	public static String execCommand(String cmd, Long timeout) throws RuntimeException, IOException, InterruptedException {

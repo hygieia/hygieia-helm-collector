@@ -4,6 +4,14 @@
 https://helm.sh/docs/intro/using_helm/
 https://helm.sh/docs/intro/quickstart/
 
+<h3>Which version of Helm it supports?</h3>
+Helm-3
+
+<h3>How is Helm Collector should is used?</h3>
+This is a command line reader tool. This collector fires the command line command like helm ls , helm history and 
+parse the output to find the chart deployment details in the clster
+Thus this collector needs to deploy in the same machine where the helm -3 is installed
+
 
 <h3>How is Helm App Organized?</h3>
 The Helm tool is an standard tool for Kubernestes Deployment

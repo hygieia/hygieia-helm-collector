@@ -32,12 +32,12 @@ The <action> type attribute can be add,update,fix,remove.
 
 <document>
     <properties>
-        <title>Hygieia Docker Collector Changes</title>
+        <title>Hygieia Helm Collector Changes</title>
     </properties>
     <body>
 
         <release version="1.0.0" date="2020-06-08" description="">
-            <action type="add" dev="prash897">Add Docker Collector plugin</action>
+            <action type="add" dev="prash897">Add Helm Collector plugin</action>
         </release>
 
     </body>

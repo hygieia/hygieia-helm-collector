@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -12,18 +13,17 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<!--
-!!! For Security Vulnerabilities, please go to https://gitter.im/capitalone/Hygieia and find
-    an active team memberl, request their email address, and email directly!!!
--->
-**Affects:** \<hygieia-helm-collector-version-number>.
+<document>
+    <properties>
+        <title>Home</title>
+        <author email="hygieia2@capitalone.com">Hygieia Team</author>
+    </properties>
+    <body>
+        <!-- ================================================== -->
+        <section name="Hygieia Github Collector">
+            Welcome to the Hygieia Github Collector
+        </section>
+        <!-- ================================================== -->
 
----
-<!--
-- For bugs, specify affected versions and explain what you are trying to do.
-- For enhancements, provide context and describe the problem.
-
-Issue or Pull Request? Create only one, not both. GitHub treats them as the same.
-If unsure, start with an issue, and if you submit a pull request later, the
-issue will be closed as superseded.
--->
+    </body>
+</document>

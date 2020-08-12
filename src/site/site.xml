@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -12,18 +13,23 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<!--
-!!! For Security Vulnerabilities, please go to https://gitter.im/capitalone/Hygieia and find
-    an active team memberl, request their email address, and email directly!!!
--->
-**Affects:** \<hygieia-helm-collector-version-number>.
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/DECORATION/1.0.0"
+         xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd">
+    <skin>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-skin</artifactId>
+        <version>4.1</version>
+    </skin>
+    <publishDate format="dd MMMM yyyy" position="left"/>
 
----
-<!--
-- For bugs, specify affected versions and explain what you are trying to do.
-- For enhancements, provide context and describe the problem.
+    <version position="left"/>
+    <body>
+        <menu name="Overview">
+            <item name="Introduction" href="index.html"/>
+        </menu>
 
-Issue or Pull Request? Create only one, not both. GitHub treats them as the same.
-If unsure, start with an issue, and if you submit a pull request later, the
-issue will be closed as superseded.
--->
+        <menu ref="reports" inherit="bottom"/>
+
+    </body>
+</project>

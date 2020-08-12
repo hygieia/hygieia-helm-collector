@@ -2,14 +2,12 @@ package com.capitalone.dashboard.collector;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
 /**
  * Bean to hold settings specific to the Docker collector.
  */
 @Component
-@RefreshScope
 @ConfigurationProperties(prefix = "helm")
 public class HelmSettings {
 	private String proxy;

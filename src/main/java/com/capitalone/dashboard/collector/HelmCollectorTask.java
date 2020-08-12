@@ -20,6 +20,7 @@ import com.capitalone.dashboard.exception.CommandLineException;
 import com.capitalone.dashboard.exception.NoDataFoundException;
 import com.capitalone.dashboard.model.Chart;
 import com.capitalone.dashboard.model.Collector;
+import com.capitalone.dashboard.model.CollectorType;
 import com.capitalone.dashboard.model.Release;
 import com.capitalone.dashboard.model.Repo;
 import com.capitalone.dashboard.model.Version;

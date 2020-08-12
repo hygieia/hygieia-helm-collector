@@ -1,5 +1,8 @@
 <h2>Helm Collector</h2>
 
+[![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+[![Gitter Chat](https://badges.gitter.im/Join%20Chat.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+
 A collector to showcase the Kubernetes Deployment Container details
 <ul>
   <li>https://helm.sh/docs/intro/using_helm/</li>

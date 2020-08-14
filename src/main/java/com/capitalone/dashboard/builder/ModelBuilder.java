@@ -1,36 +1,47 @@
 package com.capitalone.dashboard.builder;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
+import com.capitalone.dashboard.enums.Clazz;
 import com.capitalone.dashboard.enums.HelmStatus;
 import com.capitalone.dashboard.model.BaseModel;
 import com.capitalone.dashboard.model.Chart;
 import com.capitalone.dashboard.model.Release;
 import com.capitalone.dashboard.model.Repo;
-import com.capitalone.dashboard.model.Version;
+
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.ChronoField;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Application configuration and bootstrap
  */
 public class ModelBuilder {
-	static SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd hh:mm:ss yyyy");
-
-	public static BaseModel createModelObject(Class clazz, Object[] args) throws ParseException {
-		long millis = 0l;
-		if (clazz.equals(Chart.class)) {
-			millis = format.parse(args[0].toString()).getTime();
-			return new Chart(millis, args[1].toString(), args[2].toString(), args[3].toString(), args[4].toString());
-		} else if (clazz.equals(Version.class)) {
-			return new Version(args[0].toString(), args[1].toString(), args[2].toString(), args[3].toString());
-		} else if (clazz.equals(Repo.class)) {
-			return new Repo(args[0].toString(), args[1].toString());
-		} else if (clazz.equals(Release.class)) {
-			millis = format.parse(args[2].toString()).getTime();
-			HelmStatus status = HelmStatus.valueOf(args[3].toString());
-			return new Release(args[0].toString(), args[1].toString(), millis, status , args[4].toString());
-		}
-
-		return null;
-	}
+    public static BaseModel createModelObject(Class<?> clazz, Map<String, String> args) {
+        switch (Clazz.valueOf(clazz.getSimpleName())) {
+            case Chart:
+                final DateTimeFormatter chartDateTimeFormatter = new DateTimeFormatterBuilder()
+                        .parseCaseInsensitive()
+                        .appendPattern("EEE MMM d HH:mm:ss yyyy")
+                        .toFormatter(Locale.US);
+                final LocalDateTime chartDateTime = LocalDateTime.parse(args.get("UPDATED").replaceAll(" {2}", " "), chartDateTimeFormatter);
+                return new Chart(chartDateTime.atZone(ZoneOffset.systemDefault()).toEpochSecond(), args.get("STATUS").toUpperCase(), args.get("CHART"), args.get("APP VERSION"), args.get("DESCRIPTION"));
+            case Repo:
+                return new Repo(args.get("NAME"), args.get("URL"));
+            case Release:
+                final DateTimeFormatter releaseDateTimeFormatter = new DateTimeFormatterBuilder()
+                        .parseCaseInsensitive()
+                        .appendPattern("yyyy-MM-dd HH:mm:ss")
+                        .appendFraction(ChronoField.NANO_OF_SECOND, 0, 9, true)
+                        .appendPattern(" Z zzz")
+                        .toFormatter(Locale.US);
+                final ZonedDateTime releaseDateTime = ZonedDateTime.parse(args.get("UPDATED"), releaseDateTimeFormatter);
+                return new Release(args.get("NAME"), args.get("APP VERSION"), releaseDateTime.toEpochSecond(), HelmStatus.valueOf(args.get("STATUS").toUpperCase()), args.get("CHART"), args.get("NAMESPACE"));
+            default:
+                throw new IllegalStateException("Unexpected value: " + Clazz.valueOf(clazz.getSimpleName()));
+        }
+    }
 }

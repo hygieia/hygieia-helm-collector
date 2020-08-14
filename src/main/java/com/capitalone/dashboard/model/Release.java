@@ -1,47 +1,41 @@
 package com.capitalone.dashboard.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import org.bson.types.ObjectId;
+import com.capitalone.dashboard.enums.HelmStatus;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import com.capitalone.dashboard.enums.HelmStatus;
 
 /*Model to store the latest release Data*/
 
 @Document(collection="helm_release")
+@CompoundIndexes({
+		@CompoundIndex(name = "release_namespace", def = "{'name' : 1, 'namespace': 1}")
+})
 public class Release extends BaseModel{
-	@Indexed(unique = true)
 	private String name;
 	private String  version;
 	private Long updated;
 	private HelmStatus status;
-	
+	private String namespace;
 	@Transient
 	private String chart;
-	
-	public Release(String name, String version, Long updated, HelmStatus status, String chart) {
-		//super.objectId = objectId;// private but not same package
+
+	public Release() {
+		super();
+	}
+
+	public Release(String name, String version, Long updated, HelmStatus status, String chart, String namespace) {
 		this.name = name;
 		this.version = version;
 		this.updated = updated;
 		this.status = status;
 		this.chart = chart;
-	}
-	
-	public Release(String name, String version, Long updated, HelmStatus status) {
-		//super.objectId = objectId;// private but not same package
-		this.name = name;
-		this.version = version;
-		this.updated = updated;
-		this.status = status;
+		this.namespace = namespace;
 	}
 
-	
-	
 	public String getChart() {
 		return chart;
 	}
@@ -82,4 +76,11 @@ public class Release extends BaseModel{
 		this.status = status;
 	}
 
+	public String getNamespace() {
+		return namespace;
+	}
+
+	public void setNamespace(final String namespace) {
+		this.namespace = namespace;
+	}
 }

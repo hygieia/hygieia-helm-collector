@@ -1,8 +1,13 @@
-<h4> Helm Collector</h4>
+<h2>Helm Collector</h2>
 
-<h3>A collector to showcase the Kubernetes Deployment Container details</h3>
-https://helm.sh/docs/intro/using_helm/
-https://helm.sh/docs/intro/quickstart/
+[![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+[![Gitter Chat](https://badges.gitter.im/Join%20Chat.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+
+A collector to showcase the Kubernetes Deployment Container details
+<ul>
+  <li>https://helm.sh/docs/intro/using_helm/</li>
+  <li>https://helm.sh/docs/intro/quickstart/</li>
+</ul>  
 
 <h3>Which version of Helm it supports?</h3>
 Helm-3
@@ -20,17 +25,17 @@ This collector collects the deployment details of Releases, Charts & Repo
 It simply fires the commandline command and collects/updates the Data in Mongo
 The following commands it fires   
 
-<h2>1. helm history [release_name]</h2>
-https://helm.sh/docs/helm/helm_list/
+<h3>1. helm history [release_name]</h3>
+https://helm.sh/docs/helm/helm_history/
 
-<h1>Sample Output</h1>
+<h4>Sample Output</h4>
 NAME                UPDATED                     CHART
 maudlin-arachnid    Mon May  9 16:07:08 2016    alpine-0.1.0
 
-<h2>2. helm list </h2>
-https://helm.sh/docs/helm/helm_history/
+<h3>2. helm list </h3>
+https://helm.sh/docs/helm/helm_list/
 
-<h1>Sample Output</h1>
+<h4>Sample Output</h4>
 $ helm history angry-bird
 REVISION    UPDATED                     STATUS          CHART             APP VERSION     DESCRIPTION
 1           Mon Oct 3 10:15:13 2016     superseded      alpine-0.1.0      1.0             Initial install
@@ -38,7 +43,7 @@ REVISION    UPDATED                     STATUS          CHART             APP VE
 3           Mon Oct 3 10:15:13 2016     superseded      alpine-0.1.0      1.0             Rolled back to 2
 4           Mon Oct 3 10:15:13 2016     deployed        alpine-0.1.0      1.0             Upgraded successfully
 
-<h2>3. helm repo list</h2>
+<h3>3. helm repo list</h3>
 https://helm.sh/docs/helm/helm_repo_list/
 
 

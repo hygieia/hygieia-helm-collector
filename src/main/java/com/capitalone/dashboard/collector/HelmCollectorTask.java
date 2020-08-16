@@ -5,10 +5,10 @@ import com.capitalone.dashboard.exception.CommandLineException;
 import com.capitalone.dashboard.exception.NoDataFoundException;
 import com.capitalone.dashboard.model.*;
 import com.capitalone.dashboard.repository.*;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.bson.types.ObjectId;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Component;
@@ -178,7 +178,7 @@ public class HelmCollectorTask extends CollectorTask<Collector> {
         if (versionOutput.trim().isEmpty()) {
             throw new CommandLineException(command);
         }
-        JSONObject versionObj = helmClient.parseAsObject(versionOutput);
+        JsonNode versionObj = helmClient.parseAsObject(versionOutput);
         saveOrUpdateVersion(versionObj);
     }
 
@@ -187,7 +187,7 @@ public class HelmCollectorTask extends CollectorTask<Collector> {
         chartRepository.delete(charts);
     }
 
-    private void saveOrUpdateVersion(JSONObject jsonObj) {
+    private void saveOrUpdateVersion(JsonNode jsonObj) {
         Version version = new Version();
         version.setGitCommit(jsonObj.get("GitCommit").toString());
         version.setGitTreeState(jsonObj.get("GitTreeState").toString());

@@ -3,21 +3,18 @@ package com.capitalone.dashboard.collector;
 import com.capitalone.dashboard.builder.ModelBuilder;
 import com.capitalone.dashboard.command.util.CommandLineUtil;
 import com.capitalone.dashboard.model.BaseModel;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonObject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Component;
-import tv.twelvetone.json.JsonValue;
-import tv.twelvetone.rjson.RJsonParserFactory;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -36,7 +33,7 @@ public class DefaultHelmClient implements HelmClient {
 
     @Override
     public List<? extends BaseModel> getCommandResultComposed(String command, Long timeout,
-                                           Class<?> clazz) throws RuntimeException, IOException, InterruptedException {
+                                                              Class<?> clazz) throws RuntimeException, IOException, InterruptedException {
         String result = getCommandResult(command, timeout);
         List<BaseModel> objects = new ArrayList<>();
 
@@ -56,14 +53,17 @@ public class DefaultHelmClient implements HelmClient {
         return objects;
     }
 
-    public JSONObject parseAsObject(String response) {
+    public JsonNode parseAsObject(String response) {
         try {
-            JsonValue parsed = new RJsonParserFactory().createParser().stringToValue(response);
-            return (JSONObject) new JSONParser().parse(parsed.toString());
-        } catch (ParseException pe) {
-            LOG.error(pe.getMessage());
+            JsonParser parser = new JsonFactory()
+                    .createParser(response)
+                    .enable(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES)
+                    .enable(JsonParser.Feature.ALLOW_SINGLE_QUOTES);
+            return new ObjectMapper().readTree(parser);
+        } catch (IOException e) {
+            LOG.error(e.getMessage());
+            return null;
         }
-        return null;
     }
 }
 

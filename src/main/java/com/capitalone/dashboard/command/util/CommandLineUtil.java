@@ -22,7 +22,7 @@ public class CommandLineUtil {
 			Executor executor = new DefaultExecutor();
 
 			// put a watchdog with a timeout
-			ExecuteWatchdog watchdog = new ExecuteWatchdog(new Long(timeout) * 1000);
+			ExecuteWatchdog watchdog = new ExecuteWatchdog(timeout * 1000);
 			executor.setWatchdog(watchdog);
 
 			ByteArrayOutputStream os = new ByteArrayOutputStream();

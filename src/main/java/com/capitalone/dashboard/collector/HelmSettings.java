@@ -2,194 +2,152 @@ package com.capitalone.dashboard.collector;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
 /**
  * Bean to hold settings specific to the Docker collector.
  */
 @Component
+@RefreshScope
 @ConfigurationProperties(prefix = "helm")
 public class HelmSettings {
-	private String proxy;
-	private String proxyPort;
-	private String proxyUser;
-	private String proxyPassword;
-	
-	@Value("${helm.cron}")
-	private String cron;
-	
-	@Value("${helm.checkVersion: true}")
-	private Boolean checkVersion;
-	
-	@Value("${helm.test:helm version}")
-	private String helmTestCommand;
+    private final String helmTestCommand = "helm version";
+    private final String helmListCmd = "helm list";
+    private final String helmHistoryCommand = "helm history";
+    private final String helmRepoCommand = "helm repo list";
+    private final String ocProjectsCommand = "oc projects";
+    private final String ocLoginCommand = "oc login";
+    private final String kubectlNamespacesCommand = "kubectl get namespaces";
 
-	@Value("{$helm.timeout:3000}")
-	private Long helmTimeout;
-	
-	@Value("{$helm.command.list}")
-	private String helmListCmd;
-	
-	@Value("{$helm.list.regex}")
-	private String helmListRegex;
-	
-	@Value("{$helm.history.command:helm history}")
-	private String helmHistoryCommand;
-	
-	
-	@Value("{$helm.history.regex}")
-	private String helmHistoryRegex;
-	
-	
-	@Value("{$helm.repo.command:helm repo}")
-	private String helmRepoCommand;
-	
-	
-	@Value("{$helm.repo.command:helm repo}")
-	private String helmRepoRegex;
+    private String proxy;
+    private String proxyPort;
+    private String proxyUser;
+    private String proxyPassword;
 
+    @Value("${helm.cron}")
+    private String cron;
 
-	
-	
-	
-	public Boolean getCheckVersion() {
-		return checkVersion;
-	}
+    @Value("${helm.checkVersion: true}")
+    private Boolean checkVersion;
 
+    @Value("${helm.timeout:3000}")
+    private Long helmTimeout;
 
-	public void setCheckVersion(Boolean checkVersion) {
-		this.checkVersion = checkVersion;
-	}
+    @Value("${helm.openshift:false}")
+    private boolean isOpenshift;
 
+    @Value("${helm.kubeConfig.path}")
+    private String kubeConfigPath;
 
-	public String getProxy() {
-		return proxy;
-	}
+    @Value("${helm.openshift.token}")
+    private String openshiftToken;
 
+    public Boolean getCheckVersion() {
+        return checkVersion;
+    }
 
-	public void setProxy(String proxy) {
-		this.proxy = proxy;
-	}
+    public void setCheckVersion(Boolean checkVersion) {
+        this.checkVersion = checkVersion;
+    }
 
+    public String getProxy() {
+        return proxy;
+    }
 
-	public String getProxyPort() {
-		return proxyPort;
-	}
+    public void setProxy(String proxy) {
+        this.proxy = proxy;
+    }
 
+    public String getProxyPort() {
+        return proxyPort;
+    }
 
-	public void setProxyPort(String proxyPort) {
-		this.proxyPort = proxyPort;
-	}
+    public void setProxyPort(String proxyPort) {
+        this.proxyPort = proxyPort;
+    }
 
+    public String getProxyUser() {
+        return proxyUser;
+    }
 
-	public String getProxyUser() {
-		return proxyUser;
-	}
+    public void setProxyUser(String proxyUser) {
+        this.proxyUser = proxyUser;
+    }
 
+    public String getProxyPassword() {
+        return proxyPassword;
+    }
 
-	public void setProxyUser(String proxyUser) {
-		this.proxyUser = proxyUser;
-	}
+    public void setProxyPassword(String proxyPassword) {
+        this.proxyPassword = proxyPassword;
+    }
 
+    public String getCron() {
+        return cron;
+    }
 
-	public String getProxyPassword() {
-		return proxyPassword;
-	}
+    public void setCron(String cron) {
+        this.cron = cron;
+    }
 
+    public String getHelmTestCommand() {
+        return helmTestCommand;
+    }
 
-	public void setProxyPassword(String proxyPassword) {
-		this.proxyPassword = proxyPassword;
-	}
+    public Long getHelmTimeout() {
+        return helmTimeout;
+    }
 
+    public void setHelmTimeout(Long helmTimeout) {
+        this.helmTimeout = helmTimeout;
+    }
 
-	public String getCron() {
-		return cron;
-	}
+    public String getHelmListCmd() {
+        return helmListCmd;
+    }
 
+    public String getHelmHistoryCommand() {
+        return helmHistoryCommand;
+    }
 
-	public void setCron(String cron) {
-		this.cron = cron;
-	}
+    public String getHelmRepoCommand() {
+        return helmRepoCommand;
+    }
 
+    public boolean isOpenshift() {
+        return isOpenshift;
+    }
 
-	public String getHelmTestCommand() {
-		return helmTestCommand;
-	}
+    public void setOpenshift(final boolean openshift) {
+        isOpenshift = openshift;
+    }
 
+    public String getOcProjectsCommand() {
+        return ocProjectsCommand;
+    }
 
-	public void setHelmTestCommand(String helmTestCommand) {
-		this.helmTestCommand = helmTestCommand;
-	}
+    public String getOcLoginCommand() {
+        return ocLoginCommand;
+    }
 
+    public String getKubeConfigPath() {
+        return kubeConfigPath;
+    }
 
-	public Long getHelmTimeout() {
-		return helmTimeout;
-	}
+    public void setKubeConfigPath(final String kubeConfigPath) {
+        this.kubeConfigPath = kubeConfigPath;
+    }
 
+    public String getOpenshiftToken() {
+        return openshiftToken;
+    }
 
-	public void setHelmTimeout(Long helmTimeout) {
-		this.helmTimeout = helmTimeout;
-	}
+    public void setOpenshiftToken(final String openshiftToken) {
+        this.openshiftToken = openshiftToken;
+    }
 
-
-	public String getHelmListCmd() {
-		return helmListCmd;
-	}
-
-
-	public void setHelmListCmd(String helmListCmd) {
-		this.helmListCmd = helmListCmd;
-	}
-
-
-	public String getHelmListRegex() {
-		return helmListRegex;
-	}
-
-
-	public void setHelmListRegex(String helmListRegex) {
-		this.helmListRegex = helmListRegex;
-	}
-
-
-	public String getHelmHistoryCommand() {
-		return helmHistoryCommand;
-	}
-
-
-	public void setHelmHistoryCommand(String helmHistoryCommand) {
-		this.helmHistoryCommand = helmHistoryCommand;
-	}
-
-
-	public String getHelmHistoryRegex() {
-		return helmHistoryRegex;
-	}
-
-
-	public void setHelmHistoryRegex(String helmHistoryRegex) {
-		this.helmHistoryRegex = helmHistoryRegex;
-	}
-
-
-	public String getHelmRepoCommand() {
-		return helmRepoCommand;
-	}
-
-
-	public void setHelmRepoCommand(String helmRepoCommand) {
-		this.helmRepoCommand = helmRepoCommand;
-	}
-
-
-	public String getHelmRepoRegex() {
-		return helmRepoRegex;
-	}
-
-
-	public void setHelmRepoRegex(String helmRepoRegex) {
-		this.helmRepoRegex = helmRepoRegex;
-	}
-	
-	
+    public String getKubectlNamespacesCommand() {
+        return kubectlNamespacesCommand;
+    }
 }

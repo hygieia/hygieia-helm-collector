@@ -8,7 +8,5 @@ import com.capitalone.dashboard.model.Repo;
 
 public interface RepoRepository<T extends Repo> extends CrudRepository<T, ObjectId> {
 
-	@Query(value = "{'repo': ?0}")
-	public Repo findByRepoName(String repo);
-
+	Repo findByName(String repo);
 }
